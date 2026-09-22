@@ -36,5 +36,6 @@ outputs/
 # Private project working files
 .plan/
 .codex/
+AGENTS.md
 
 # Commit uv.lock for reproducibility.
