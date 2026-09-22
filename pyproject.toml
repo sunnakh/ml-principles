@@ -1,0 +1,53 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "ml-from-first-principles"
+version = "0.1.0"
+description = "Learning machine learning through NumPy implementations, derivations, and independent tests."
+readme = "README.md"
+requires-python = ">=3.12,<3.13"
+dependencies = ["numpy>=2.2,<3"]
+
+[project.optional-dependencies]
+notebooks = ["jupyterlab>=4.3,<5", "ipykernel>=6.29,<8"]
+
+[dependency-groups]
+dev = [
+    "matplotlib>=3.9,<4",
+    "mypy>=1.14,<2",
+    "pytest>=8.3,<10",
+    "pytest-cov>=6,<8",
+    "ruff>=0.11,<1",
+    "scikit-learn>=1.6,<2",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/ml_principles"]
+
+[tool.ruff]
+target-version = "py312"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "NPY"]
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--strict-config --strict-markers -ra"
+markers = [
+    "slow: expensive experiments excluded from the fast CI gate",
+    "integration: checks requiring external data or services",
+]
+
+[tool.coverage.run]
+source = ["ml_principles"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
