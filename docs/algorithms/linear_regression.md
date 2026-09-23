@@ -140,7 +140,7 @@ $$
 Ordinary least squares is the unweighted, unregularized problem
 
 $$
-\underset{w,b}{\operatorname{minimize}}
+\min_{w,b}
 \quad
 \sum_{i=1}^{n}(\hat y_i-y_i)^2.
 $$
@@ -422,15 +422,15 @@ hide that behavior.
 Add the intercept as a column of ones:
 
 $$
-A=[X\ \mathbf 1],
+A=\left[X\ \mathbf 1\right],
 \qquad
-\theta=\begin{bmatrix}w\\b\end{bmatrix}.
+\theta=\left[w_1,\ldots,w_d,b\right]^\top.
 $$
 
 Then solve
 
 $$
-\underset{\theta}{\operatorname{minimize}}\ \|A\theta-y\|_2^2
+\min_{\theta}\ \|A\theta-y\|_2^2
 $$
 
 with a stable numerical routine such as `np.linalg.lstsq`. Do not explicitly
