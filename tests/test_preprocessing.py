@@ -122,9 +122,6 @@ def test_rejects_sparse_input() -> None:
         def toarray(self) -> np.ndarray:
             return np.array([[1.0]])
 
-        def __array__(self, dtype: object = None) -> np.ndarray:
-            return np.array([[1.0]], dtype=dtype)
-
     with pytest.raises(ValueError):
         StandardScaler().fit(SparseInput())
 
