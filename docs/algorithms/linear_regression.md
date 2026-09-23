@@ -9,32 +9,32 @@ Linear regression predicts one continuous numerical target from one or more
 numerical features. The first baseline is a constant predictor fitted only on the
 training set:
 
-\[
+$$
 \hat y_{\text{baseline}}=\bar y_{\text{train}}.
-\]
+$$
 
 The estimator should improve on that baseline on held-out data before its added
 complexity is treated as useful.
 
 Imagine predicting delivery time from distance. A one-feature model is
 
-\[
+$$
 \widehat{\text{minutes}}=w\times\text{distance in km}+b.
-\]
+$$
 
-The weight \(w\) describes how much the prediction changes for one additional
-kilometre. The intercept \(b\) is the prediction at zero distance and might absorb
+The weight $w$ describes how much the prediction changes for one additional
+kilometre. The intercept $b$ is the prediction at zero distance and might absorb
 a fixed preparation component. These interpretations describe associations in the
 fitted model; they do not establish causal effects.
 
 With more features, the same model becomes
 
-\[
+$$
 \hat y=
 w_1(\text{distance})+
 w_2(\text{number of stops})+
 w_3(\text{package weight})+b.
-\]
+$$
 
 Geometrically, the model fits a line for one feature and a hyperplane for several
 features. It adjusts its coefficients so that predictions are close to observed
@@ -108,14 +108,14 @@ the supplied features.
 
 | Symbol | Shape | Meaning |
 |---|---:|---|
-| \(n\) | scalar | Number of training samples |
-| \(d\) | scalar | Number of input features |
-| \(X\) | \((n,d)\) | Feature matrix |
-| \(y\) | \((n,)\) | One target per sample |
-| \(w\) | \((d,)\) | One learned weight per feature |
-| \(b\) | scalar | Shared learned intercept |
-| \(\hat y\) | \((n,)\) | One prediction per sample |
-| \(e\) | \((n,)\) | Residuals, defined as prediction minus target |
+| $n$ | scalar | Number of training samples |
+| $d$ | scalar | Number of input features |
+| $X$ | $(n,d)$ | Feature matrix |
+| $y$ | $(n,)$ | One target per sample |
+| $w$ | $(d,)$ | One learned weight per feature |
+| $b$ | scalar | Shared learned intercept |
+| $\hat y$ | $(n,)$ | One prediction per sample |
+| $e$ | $(n,)$ | Residuals, defined as prediction minus target |
 
 One feature is represented as `X.shape == (n, 1)`, not `(n,)`. Ten features use
 `X.shape == (n, 10)`. The first estimator supports one target, not multiple output
@@ -123,44 +123,44 @@ targets.
 
 ### Prediction rule
 
-For sample \(i\):
+For sample $i$:
 
-\[
+$$
 \hat y_i=\sum_{j=1}^{d}X_{ij}w_j+b.
-\]
+$$
 
 In vector form:
 
-\[
+$$
 \boxed{\hat y=Xw+b}.
-\]
+$$
 
 ### Ordinary least squares and full MSE
 
 Ordinary least squares is the unweighted, unregularized problem
 
-\[
+$$
 \underset{w,b}{\operatorname{minimize}}
 \quad
 \sum_{i=1}^{n}(\hat y_i-y_i)^2.
-\]
+$$
 
 Define residuals using prediction minus observation:
 
-\[
+$$
 e_i=\hat y_i-y_i.
-\]
+$$
 
 This project uses **full MSE**:
 
-\[
+$$
 \boxed{
 J(w,b)=\frac{1}{n}\sum_{i=1}^{n}e_i^2
 =\frac{1}{n}\sum_{i=1}^{n}(X_iw+b-y_i)^2
 }.
-\]
+$$
 
-Dividing the squared-error sum by the fixed positive number \(n\) does not change
+Dividing the squared-error sum by the fixed positive number $n$ does not change
 the minimizing parameters. It makes loss values more comparable across datasets
 of different sizes when their target units and distributions are comparable.
 
@@ -176,51 +176,51 @@ unique, or that the minimum loss is zero.
 
 ### Weight-gradient derivation
 
-For weight \(w_j\), apply the chain rule:
+For weight $w_j$, apply the chain rule:
 
-\[
+$$
 \frac{\partial J}{\partial w_j}
 =\frac{1}{n}\sum_{i=1}^{n}
 2e_i\frac{\partial e_i}{\partial w_j}.
-\]
+$$
 
 Because
 
-\[
+$$
 e_i=\sum_{k=1}^{d}X_{ik}w_k+b-y_i,
 \qquad
 \frac{\partial e_i}{\partial w_j}=X_{ij},
-\]
+$$
 
 the derivative is
 
-\[
+$$
 \frac{\partial J}{\partial w_j}
 =\frac{2}{n}\sum_{i=1}^{n}X_{ij}e_i.
-\]
+$$
 
 Collecting the derivatives for every weight gives
 
-\[
+$$
 \boxed{\nabla_wJ=\frac{2}{n}X^\top e
 =\frac{2}{n}X^\top(Xw+b-y)}.
-\]
+$$
 
 Each component aggregates residuals weighted by the corresponding feature values.
 
 ### Intercept-gradient derivation
 
-Because \(\partial e_i/\partial b=1\),
+Because $\partial e_i/\partial b=1$,
 
-\[
+$$
 \boxed{
 \frac{\partial J}{\partial b}
 =\frac{2}{n}\sum_{i=1}^{n}e_i
 =\frac{2}{n}\sum_{i=1}^{n}(X_iw+b-y_i)
 }.
-\]
+$$
 
-The intercept gradient aggregates the residuals directly. The factor \(2\) in
+The intercept gradient aggregates the residuals directly. The factor $2$ in
 both gradients comes from differentiating the square. It must remain present
 because this project uses full MSE rather than silently switching to half-MSE.
 
@@ -228,7 +228,7 @@ because this project uses full MSE rather than silently switching to half-MSE.
 
 Let
 
-\[
+$$
 X=\begin{bmatrix}1\\2\end{bmatrix},
 \qquad
 y=\begin{bmatrix}3\\5\end{bmatrix},
@@ -236,44 +236,44 @@ y=\begin{bmatrix}3\\5\end{bmatrix},
 w=0,
 \qquad
 b=0.
-\]
+$$
 
 The initial predictions, residuals, and loss are
 
-\[
+$$
 \hat y=\begin{bmatrix}0\\0\end{bmatrix},
 \qquad
 e=\begin{bmatrix}-3\\-5\end{bmatrix},
 \qquad
 J=\frac{(-3)^2+(-5)^2}{2}=17.
-\]
+$$
 
 The gradients are
 
-\[
+$$
 \nabla_wJ=\frac{2}{2}\left(1(-3)+2(-5)\right)=-13,
-\]
+$$
 
-\[
+$$
 \frac{\partial J}{\partial b}
 =\frac{2}{2}(-3-5)=-8.
-\]
+$$
 
-With learning rate \(\alpha=0.1\), update both parameters from the same old
+With learning rate $\alpha=0.1$, update both parameters from the same old
 parameter state:
 
-\[
+$$
 w_{\text{new}}=0-0.1(-13)=1.3,
 \qquad
 b_{\text{new}}=0-0.1(-8)=0.8.
-\]
+$$
 
-The new predictions are \([2.1,3.4]\), the new residuals are
-\([-0.9,-1.6]\), and
+The new predictions are $[2.1,3.4]$, the new residuals are
+$[-0.9,-1.6]$, and
 
-\[
+$$
 J_{\text{new}}=\frac{(-0.9)^2+(-1.6)^2}{2}=1.685.
-\]
+$$
 
 One update improved this fit; it did not finish training. Updating one parameter
 before calculating the other parameter's gradient would mix parameter states and
@@ -386,20 +386,20 @@ flowchart TD
 
 The update rule is
 
-\[
+$$
 w\leftarrow w-\alpha\nabla_wJ,
 \qquad
 b\leftarrow b-\alpha\frac{\partial J}{\partial b}.
-\]
+$$
 
 The convergence statistic is the infinity norm of the combined gradient:
 
-\[
+$$
 g_{\max}=\max\left(
 \max_j|\nabla_{w_j}J|,
 \left|\frac{\partial J}{\partial b}\right|
 \right).
-\]
+$$
 
 Training converges when `g_max <= tol`. This avoids declaring convergence merely
 because a tiny learning rate creates tiny loss changes. The initial loss is stored
@@ -421,24 +421,24 @@ hide that behavior.
 
 Add the intercept as a column of ones:
 
-\[
+$$
 A=[X\ \mathbf 1],
 \qquad
 \theta=\begin{bmatrix}w\\b\end{bmatrix}.
-\]
+$$
 
 Then solve
 
-\[
+$$
 \underset{\theta}{\operatorname{minimize}}\ \|A\theta-y\|_2^2
-\]
+$$
 
 with a stable numerical routine such as `np.linalg.lstsq`. Do not explicitly
 compute
 
-\[
+$$
 (A^\top A)^{-1}A^\top y,
-\]
+$$
 
 because it requires invertibility and can worsen numerical conditioning.
 
@@ -541,7 +541,7 @@ error alone is not evidence of generalization.
 
 For delivery-time-style evaluation, ask:
 
-- Do held-out MSE, MAE, RMSE, and \(R^2\) improve on the training-mean baseline
+- Do held-out MSE, MAE, RMSE, and $R^2$ improve on the training-mean baseline
   under their documented conventions?
 - Are long-distance or peak-hour deliveries systematically underestimated?
 - Can the model produce impossible negative durations?
@@ -553,16 +553,16 @@ costs rather than chosen after seeing favorable results.
 
 ## Complexity and benchmarks
 
-Let \(T\) be the number of completed gradient updates, \(n\) the number of training
-rows, \(d\) the number of features, and \(m\) the number of prediction rows.
+Let $T$ be the number of completed gradient updates, $n$ the number of training
+rows, $d$ the number of features, and $m$ the number of prediction rows.
 
 | Operation | Time | Additional/storage space |
 |---|---:|---:|
-| One batch-GD update | \(O(nd)\) | \(O(n+d)\) for predictions, residuals, gradients, and parameters |
-| Batch-GD fit | \(O(Tnd)\) | \(O(n+d+T)\), including loss history |
-| Predict \(m\) rows | \(O(md)\) | \(O(m)\) output |
-| Learned predictive state | — | \(O(d)\) weights plus one intercept |
-| Dense least squares, commonly when \(n\ge d\) | approximately \(O(nd^2)\) | implementation dependent |
+| One batch-GD update | $O(nd)$ | $O(n+d)$ for predictions, residuals, gradients, and parameters |
+| Batch-GD fit | $O(Tnd)$ | $O(n+d+T)$, including loss history |
+| Predict $m$ rows | $O(md)$ | $O(m)$ output |
+| Learned predictive state | — | $O(d)$ weights plus one intercept |
+| Dense least squares, commonly when $n\ge d$ | approximately $O(nd^2)$ | implementation dependent |
 
 The learned predictive state excludes preprocessing statistics and optional loss
 history. Batch gradient descent makes repeated full-data passes and requires
