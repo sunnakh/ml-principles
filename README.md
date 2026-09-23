@@ -4,8 +4,10 @@ A learning and engineering project implementing foundational machine learning
 algorithms in Python and NumPy, supported by mathematical explanations,
 independent tests, reference comparisons, and failure analysis.
 
-**Status:** environment and repository foundation only. No algorithms or benchmark
-results are implemented yet. This is an educational library, not production software.
+**Status:** the repository foundation is complete, and the linear-regression
+contract and derivation are documented. Algorithm implementations, algorithm tests,
+experiments, and benchmark results are not complete yet. This is an educational
+library, not production software.
 
 ## Setup
 
@@ -50,9 +52,23 @@ a package build. Expensive/external checks should use `slow`/`integration` marke
 ## First milestone
 
 Implement and explain StandardScaler and linear regression with batch gradient
-descent, full MSE, MAE, and R2. Validate with hand-computable cases, numerical
+descent, full MSE, MAE, and R². Validate with hand-computable cases, numerical
 gradient checks, and a trusted reference. Experiment with feature scaling,
 learning rate, outliers, and correlated features before moving to another model.
+
+### Algorithm progress
+
+| Component | Status | Evidence or next step |
+|---|---|---|
+| Linear-regression contract and derivation | Documented | [Problem framing, full-MSE derivation, API contract, stopping behavior, and failure analysis](docs/algorithms/linear_regression.md) |
+| StandardScaler | Next | Implement dense float64 fit/transform behavior and edge cases |
+| MSE, MAE, and R² metrics | Planned | Implement after scaling so evaluation uses explicit, tested conventions |
+| Batch-gradient-descent linear regression | Planned | Implement after preprocessing and metrics |
+| Independent tests and reference comparison | Planned | Add hand-worked, gradient, invariant, and least-squares checks |
+| Controlled experiments and benchmarks | Planned | Record measured evidence only after the implementation passes its checks |
+
+The linear-regression document remains **in progress** because implementation,
+verification, reference comparison, and experiments are still pending.
 
 ## Working conventions
 
