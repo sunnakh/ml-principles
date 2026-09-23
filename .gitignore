@@ -37,5 +37,6 @@ outputs/
 .plan/
 .codex/
 AGENTS.md
+ml-principles.md
 
 # Commit uv.lock for reproducibility.
