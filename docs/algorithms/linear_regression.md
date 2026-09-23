@@ -229,9 +229,9 @@ because this project uses full MSE rather than silently switching to half-MSE.
 Let
 
 $$
-X=\begin{bmatrix}1\\2\end{bmatrix},
+X=\left[1,2\right]^\top,
 \qquad
-y=\begin{bmatrix}3\\5\end{bmatrix},
+y=\left[3,5\right]^\top,
 \qquad
 w=0,
 \qquad
@@ -241,9 +241,9 @@ $$
 The initial predictions, residuals, and loss are
 
 $$
-\hat y=\begin{bmatrix}0\\0\end{bmatrix},
+\hat y=\left[0,0\right]^\top,
 \qquad
-e=\begin{bmatrix}-3\\-5\end{bmatrix},
+e=\left[-3,-5\right]^\top,
 \qquad
 J=\frac{(-3)^2+(-5)^2}{2}=17.
 $$
