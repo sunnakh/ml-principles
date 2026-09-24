@@ -4,36 +4,11 @@ A learning and engineering project implementing foundational machine learning
 algorithms in Python and NumPy, supported by mathematical explanations,
 independent tests, reference comparisons, and failure analysis.
 
-**Status:** the repository foundation is complete, and the linear-regression
-contract and derivation are documented. Algorithm implementations, algorithm tests,
-experiments, and benchmark results are not complete yet. This is an educational
-library, not production software.
-
-## Setup
-
-Prerequisite: [uv](https://docs.astral.sh/uv/getting-started/installation/).
-Run these commands from the project directory:
-
-```sh
-uv sync --locked
-uv run --locked python -c "import ml_principles, numpy; print(numpy.__version__)"
-```
-
-Python 3.12 is selected by `.python-version`; uv can download it if unavailable.
-The local environment is `.venv`. uv runs use it automatically. For a conventional
-terminal session on macOS/Linux, activate it with `source .venv/bin/activate`;
-leave it with `deactivate`. Select `.venv/bin/python` in your editor.
-
-Optional notebooks:
-
-```sh
-uv sync --locked --extra notebooks
-uv run --locked --extra notebooks jupyter lab
-```
-
-Use the project's Python kernel and keep reusable logic in `src/ml_principles`.
-The lockfile includes optional dependencies; the initial installation need not
-install them. Normal `uv sync --locked` returns to the default dependency set.
+**Status:** the repository foundation, linear-regression contract and derivation,
+StandardScaler, regression metrics, and training-mean baseline are implemented and
+tested. Linear-regression implementation, reference comparison, experiments, and
+benchmark results remain incomplete. This is an educational library, not production
+software.
 
 ## Quality checks
 
@@ -45,26 +20,28 @@ uv run --locked pytest
 uv build
 ```
 
-The initial test checks packaging only. Add independent algorithm tests as each
-implementation is developed. CI runs formatting, linting, typing, fast tests, and
-a package build. Expensive/external checks should use `slow`/`integration` markers.
+The tests cover package imports, StandardScaler behavior, regression metrics,
+input contracts, nonmutation, and relevant numerical failures. CI runs formatting,
+linting, typing, fast tests, and a package build. Expensive or external checks should
+use `slow` or `integration` markers.
 
 ## First milestone
 
-Implement and explain StandardScaler and linear regression with batch gradient
-descent, full MSE, MAE, and R². Validate with hand-computable cases, numerical
-gradient checks, and a trusted reference. Experiment with feature scaling,
-learning rate, outliers, and correlated features before moving to another model.
+StandardScaler, full MSE, MAE, R², and a training-mean baseline now support the
+next step: linear regression with batch gradient descent. Validate the estimator
+with hand-computable cases, numerical gradient checks, and a trusted reference.
+Experiment with feature scaling, learning rate, outliers, and correlated features
+before moving to another model.
 
 ### Algorithm progress
 
 | Component | Status | Evidence or next step |
 |---|---|---|
 | Linear-regression contract and derivation | Documented | [Problem framing, full-MSE derivation, API contract, stopping behavior, and failure analysis](docs/algorithms/linear_regression.md) |
-| StandardScaler | Next | Implement dense float64 fit/transform behavior and edge cases |
-| MSE, MAE, and R² metrics | Planned | Implement after scaling so evaluation uses explicit, tested conventions |
-| Batch-gradient-descent linear regression | Planned | Implement after preprocessing and metrics |
-| Independent tests and reference comparison | Planned | Add hand-worked, gradient, invariant, and least-squares checks |
+| StandardScaler | Implemented and tested | [Dense float64 implementation](src/ml_principles/preprocessing.py) with [contract and edge-case tests](tests/test_preprocessing.py) |
+| MSE, MAE, R², and mean baseline | Implemented and tested | [Validated metric implementation](src/ml_principles/metrics.py) with [hand-computed, contract, and numerical tests](tests/test_metrics.py) |
+| Batch-gradient-descent linear regression | Next | Implement the documented fit/predict, state, convergence, and failure contracts |
+| Linear-regression tests and reference comparison | Planned | Add hand-worked, gradient, invariant, and least-squares checks |
 | Controlled experiments and benchmarks | Planned | Record measured evidence only after the implementation passes its checks |
 
 The linear-regression document remains **in progress** because implementation,
