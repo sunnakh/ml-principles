@@ -123,7 +123,7 @@ def test_rejects_sparse_input() -> None:
             return np.array([[1.0]])
 
     with pytest.raises(ValueError):
-        StandardScaler().fit(SparseInput())
+        StandardScaler().fit(SparseInput())  # type: ignore
 
 
 def test_rejects_nan_input() -> None:
